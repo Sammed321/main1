@@ -26,12 +26,17 @@ export default function ProfileDropdown() {
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
-    setShow(false);
-  };
+  const newTheme = theme === "light" ? "dark" : "light";
+  setTheme(newTheme);
+  localStorage.setItem("theme", newTheme);
+  document.documentElement.setAttribute("data-theme", newTheme);
+
+  // IMPORTANT: tell all pages theme changed
+  window.dispatchEvent(new Event("theme-changed"));
+
+  setShow(false);
+};
+
 
   const signOut = () => {
     apiService.logout();
